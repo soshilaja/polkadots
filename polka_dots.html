@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 5px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="surface" width="700" height="350" />
+
+    <script>
+      const surface = document.getElementById("surface");
+      const ctx = surface.getContext("2d");
+
+      document.addEventListener("keydown", processUserInput);
+
+      let x = 20;
+      let y = 20;
+      function processUserInput(e) {
+        //37 to left, 39 to right
+        if (e.keyCode === 39) {
+          x = x + 1;
+          if (x >= 700) {
+            x = 0;
+          }
+        }
+        if (e.keyCode === 37) {
+          x = x - 1;
+          if (x <= 0) {
+            x = 700;
+          }
+        }
+        if (e.keyCode === 40) {
+          y = y + 1;
+          if (y >= 350) {
+            y = 0;
+          }
+        }
+        if (e.keyCode === 38) {
+          y = y - 1;
+          if (y <= 0) {
+            y = 350;
+          }
+        }
+        console.log(e.keyCode);
+      }
+
+      //get input from users
+      //update the world's state
+      //    -including background like clouds
+      //    -including AI like bad guys
+      //draw the world
+
+      //   let y = Math.random();
+
+      setInterval(() => {
+        // ctx.clearRect(0, 0, surface.width, surface.height); // clear the whole canvas
+        ctx.beginPath();
+
+        ctx.fillStyle =
+          "rgb(" +
+          Math.floor(255 - 30 * Math.floor(Math.random() * (6 - 0 + 1) + 0)) +
+          ", " +
+          Math.floor(255 - 70 * Math.floor(Math.random() * (6 - 0 + 1) + 0)) +
+          ", 0)";
+
+        //create random circle of random sizes
+        ctx.arc(
+          x,
+          y,
+          `${10 + Math.floor(Math.random() * (10 - 0 + 1) + 0)}`,
+          0,
+          180
+        );
+        ctx.stroke();
+        ctx.fill();
+
+        // ctx.moveTo(5, 5); // set starting pt on the canvas
+        // ctx.lineTo(200, 300); // draw a line from 5,5 to 100,100
+
+        // update the world
+
+        if (y >= 350) {
+          y = 0;
+        }
+
+        if (x >= 700) {
+          x = 0;
+        }
+
+        x = x + Math.floor(Math.random() * (350 - 0 + 1) + 0);
+        y = y + Math.floor(Math.random() * (700 - 0 + 1) + 0);
+
+        // console.log("x = ", x);
+        // console.log("y = ", y);
+      }, 100);
+    </script>
+  </body>
+</html>
